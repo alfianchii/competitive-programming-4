@@ -1,36 +1,34 @@
 #include <bits/stdc++.h>
-#include <cstdio>
 using namespace std;
 
 int main() {
   freopen("3-uva-11614.in", "r", stdin);
   freopen("3-uva-11614.out", "w", stdout);
 
-  int w;
+  int t;
+  cin >> t;
 
-  while(scanf("%d", &w) != EOF) {
-    int currW = 0, row = 0;
-    // printf("%d\n", w);
+  while (t--) {
+    int w;
+    long long row =0, currW = 0;
+
+    cin >> w;
 
     for (int i = 0; i < w; i++) {
       for (int j = 0; j <= i; j++) {
-        // printf("* ");
         currW++;
 
         if (currW == w) {
           if (j == i) row++;
 
-          // printf("DONE %d %d", row, currW);
-          printf("%d\n", row);
+          printf("%lld\n", row);
           break;
         }
       }
-
+      
       row++;
 
       if (currW == w) break;
-      
-      // printf("\n");
     }
   }
 }
