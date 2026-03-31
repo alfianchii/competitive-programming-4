@@ -36,8 +36,6 @@ int main() {
     double hi = max(value1, value2);
     double lo = min(value1, value2);
 
-    double ratio = (lo / hi) * 100;
-
-    cout << fixed << setprecision(2) << ratio << " %\n";
+    cout << fixed << setprecision(2) << (lo / hi) * 100 << " %\n";
   }
 }
