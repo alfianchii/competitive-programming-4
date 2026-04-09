@@ -2,9 +2,9 @@
 
 using namespace std;
 
-int MILE_DURATION = 29;
+int MILE_DURATION = 30;
 int MILE_PRICE = 10;
-int JUICE_DURATION = 59;
+int JUICE_DURATION = 60;
 int JUICE_PRICE = 15;
 
 int main() {
@@ -16,9 +16,9 @@ int main() {
 
     cout << "Case " << count++ << ": ";
     while (durations--) {
-      double sec; cin >> sec;
-      mile += ceil(sec/MILE_DURATION) * MILE_PRICE;
-      juice += ceil(sec/JUICE_DURATION) * JUICE_PRICE;
+      int sec; cin >> sec;
+      mile += (sec / MILE_DURATION + 1) * MILE_PRICE;
+      juice += (sec / JUICE_DURATION + 1) * JUICE_PRICE;
     }
 
     if (mile < juice) cout << "Mile " << mile << "\n";
