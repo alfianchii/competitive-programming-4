@@ -13,9 +13,8 @@ int main() {
     else if (arr[0] == arr[1]) cout << "Equal\n";
     else if (arr[0] < arr[1]) cout << "Smaller\n";
   } else if (t == 3) {
-    vector<int> temp = {arr[0], arr[1], arr[2]};
-    sort(temp.begin(), temp.end());
-    cout << arr[1] << "\n";
+    int a = arr[0], b = arr[1], c = arr[2];
+    cout << a + b + c - min({a, b, c}) - max({a, b, c}) << "\n";
   } else if (t == 4) {
     int sum = 0;
     for (int num : arr) sum += num;
