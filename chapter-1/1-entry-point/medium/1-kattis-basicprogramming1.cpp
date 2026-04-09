@@ -16,11 +16,11 @@ int main() {
     int a = arr[0], b = arr[1], c = arr[2];
     cout << a + b + c - min({a, b, c}) - max({a, b, c}) << "\n";
   } else if (t == 4) {
-    int sum = 0;
+    long long sum = 0;
     for (int num : arr) sum += num;
     cout << sum << "\n";
   } else if (t == 5) {
-    int sum = 0;
+    long long sum = 0;
     for (int num : arr) {
       if (num % 2 == 0) sum += num;
     }
