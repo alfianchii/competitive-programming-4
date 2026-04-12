@@ -6,42 +6,42 @@ int main() {
   int tcs, count = 1; cin >> tcs;
 
   while (tcs--) {
-    int y = 0;
-    vector<string> pile;
-    vector<string> hand;
+    vector<string> cards;
 
-    for (int i = 0; i < 52; i++) {
+    int amountCard = 52;
+    while (amountCard--) {
       string card; cin >> card;
-      pile.push_back(card);
+      cards.push_back(card);
     }
 
-    for (int i = 0; i < 25; i++) {
-      string top = pile.back();
-      hand.push_back(top);
-      pile.pop_back();
+    vector<string> hand;
+    int amountHand = 25;
+    while (amountHand--) {
+      string card = cards.back();
+      hand.push_back(card);
+      cards.pop_back();
     }
+    reverse(hand.begin(), hand.end());
 
+    int y = 0;
     for (int i = 0; i < 3; i++) {
-      string top = pile.back();
-      char ch = top[0];
-      int x;
+      string card = cards.back();
+      cards.pop_back();
 
+      int x;
+      char ch = card[0];
       if (ch >= '2' && ch <= '9') x = ch - '0';
       else x = 10;
 
       y += x;
 
-      int toThrow = 1 + (10 - x);
-      for (int j = 0; j < toThrow; j++) pile.pop_back();
+      int toThrow = 10 - x;
+      for (int j = 0; j < toThrow; j++) cards.pop_back();
     }
 
-    for (int j = 0; j < 25; j++) {
-      string topHand = hand.back();
-      hand.pop_back();
-      pile.push_back(topHand);
-    }
+    cards.insert(cards.end(), hand.begin(), hand.end());
 
-    string ans = pile[y - 1];
+    string ans = cards[y - 1];
     cout << "Case " << count++ << ": " << ans << "\n";
   }
 }
