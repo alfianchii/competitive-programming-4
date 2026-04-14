@@ -18,14 +18,14 @@ int main() {
     for (int i = 0; i < 1000; i++) {
       if (janeDown.empty()) {
         while (!janeUp.empty()) {
-          janeDown.push_front(janeUp.back());
-          janeUp.pop_back();
+          janeDown.push_front(janeUp.front());
+          janeUp.pop_front();
         }
       }
       if (johnDown.empty()) {
         while (!johnUp.empty()) {
-          johnDown.push_front(johnUp.back());
-          johnUp.pop_back();
+          johnDown.push_front(johnUp.front());
+          johnUp.pop_front();
         }
       }
 
