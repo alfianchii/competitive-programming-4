@@ -66,6 +66,7 @@ int main() {
       }
     }
 
-    if (!finish) cout << "Keeps going and going ...";
+    if (!finish) cout << "Keeps going and going ...\n";
+    if (tcs) cout << "\n";
   }
 }
