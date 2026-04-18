@@ -3,6 +3,27 @@
 using namespace std;
 
 int main() {
+  unordered_map<char, int> trumpMap = {
+    {'A', 11},
+    {'K', 4},
+    {'Q', 3},
+    {'J', 20},
+    {'T', 10},
+    {'9', 14},
+    {'8', 0},
+    {'7', 0}
+  };
+  unordered_map<char, int> nonTrumpMap = {
+    {'A', 11},
+    {'K', 4},
+    {'Q', 3},
+    {'J', 2},
+    {'T', 10},
+    {'9', 0},
+    {'8', 0},
+    {'7', 0}
+  };
+
   int hands; char trump; cin >> hands >> trump;
   int tcs = hands * 4;
 
@@ -10,20 +31,11 @@ int main() {
   while (tcs--) {
     string card; cin >> card;
     char number = card[0], suit = card[1];
-    if (number == 'A') score += 11;
-    else if (number == 'K') score += 4;
-    else if (number == 'Q') score += 3;
-    else if (number == 'T') score += 10;
-    else {
-      if (number == 'J') {
-        if (suit == trump) score += 20;
-        else score += 2;
-      }
 
-      if (number == '9') {
-        if (suit == trump) score += 14;
-      }
-    }
+    int point = trumpMap[number];
+    if (suit != trump) point = nonTrumpMap[number];
+
+    score += point;
   }
 
   cout << score << "\n";
