@@ -5,44 +5,25 @@ using namespace std;
 int main() {
   int a, b, c, x, y;
 
-  while (
-    cin >> a >> b >> c >> x >> y &&
-    (a != 0 && b != 0 && c != 0 && x != 0 && y != 0)
-  ) {
-    vector<int> princess(3);
-    int princessLo = min({a, b, c});
-    int princessHi = max({a, b, c});
-    princess[0] = princessLo;
-    princess[2] = princessHi;
-    princess[1] = a + b + c - princessLo - princessHi;
-    vector<int> prince(3);
-    int princeLo = min({x, y});
-    int princeHi = max({x, y});
-    prince[0] = princeLo;
-    prince[1] = princeHi;
+  while (cin >> a >> b >> c >> x >> y && (a || b || c || x || y)) {
+    vector<int> princess = {a, b, c};
+    sort(princess.begin(), princess.end());
 
-    int z = -1;
-    for (int i = 1; i <= 52; i++) {
-      int isDuplicate = false;
-      for (int num : prince) if (i == num) isDuplicate = true;
-      for (int num : princess) if (i == num) isDuplicate = true;
-      if (isDuplicate) continue;
+    int answer = -1;
+    for (int z = 1; z <= 52; z++) {
+      if (z == a || z == b || z == c || z == x || z == y) continue;
+
+      vector<int> prince = {x, y, z};
+      sort(prince.begin(), prince.end());
       
-      vector<int> prince(3);
-      int princeLo = min({x, y, i});
-      int princeHi = max({x, y, i});
-      prince[0] = princeLo;
-      prince[2] = princeHi;
-      prince[1] = x + y + i - princeLo - princeHi;
-
-      int princessWin = 0; // 2
-      bool usedPrincess[3] = {false}; // 1 1 0
-      // 28 51 29 | 1 50 52
-      for (int j = 0; j < prince.size(); j++) { // 2
+      int princessWin = 0;
+      vector<bool> used(3, false);
+      for (int i = 0; i < 3; i++) {
         bool found = false;
-        for (int k = 0; k < princess.size(); k++) {
-          if (!usedPrincess[k] && princess[k] > prince[j]) {
-            usedPrincess[k] = true;
+        
+        for (int j = 0; j < 3; j++) {
+          if (!used[j] && princess[j] > prince[i]) {
+            used[j] = true;
             princessWin++;
             found = true;
             break;
@@ -50,23 +31,21 @@ int main() {
         }
 
         if (!found) {
-          for (int k = 0; k < princess.size(); k++) {
-            if (!usedPrincess[k]) {
-              usedPrincess[k] = true;
+          for (int j = 0; j < 3; j++) {
+            if (!used[j]) {
+              used[j] = true;
               break;
             }
           }
         }
       }
 
-      int princeWin = 3 - princessWin;
-      cout << i << " " << princeWin << "\n";
-      if (princeWin >= 2) {
-        z = i;
+      if (princessWin <= 1) {
+        answer = z;
         break;
       }
     }
 
-    cout << z << "\n";
+    cout << answer << "\n";
   }
 }
