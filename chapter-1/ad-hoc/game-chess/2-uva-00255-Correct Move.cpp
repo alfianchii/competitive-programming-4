@@ -2,18 +2,19 @@
 
 using namespace std;
 
+const int BOARD_SIZE = BOARD_SIZE;
+
 bool boundaryBoardCheck(int nr, int nc) {
-  if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) return true;
-  else return false;
+  return nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE;
 }
 
-bool legalQueenMove(int k, int q, int nq) {
+bool isLegalQueenMove(int k, int q, int nq) {
   if (q == nq) return false;
   if (nq == k) return false;
 
-  int rk = k / 8; int ck = k % 8;
-  int rq = q / 8; int cq = q % 8;
-  int rnq = nq / 8; int cnq = nq % 8;
+  int rk = k / BOARD_SIZE; int ck = k % BOARD_SIZE;
+  int rq = q / BOARD_SIZE; int cq = q % BOARD_SIZE;
+  int rnq = nq / BOARD_SIZE; int cnq = nq % BOARD_SIZE;
 
   if (rq == rnq) {
     if (rk == rq && (ck > min(cq, cnq) && ck < max(cq, cnq))) return false;
@@ -26,63 +27,63 @@ bool legalQueenMove(int k, int q, int nq) {
   return true;
 }
 
-bool allowedQueenMove(int k, int q, int nq) {
+bool isAllowedQueenMove(int k, int q, int nq) {
   int nr, nc, pos;
-  int rk = k / 8; int ck = k % 8;
+  int rk = k / BOARD_SIZE; int ck = k % BOARD_SIZE;
 
   nr = rk - 1; nc = ck;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos == nq) return false;
   }
 
   nr = rk + 1; nc = ck;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos == nq) return false;
   }
 
   nr = rk; nc = ck - 1;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos == nq) return false;
   }
 
   nr = rk; nc = ck + 1;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos == nq) return false;
   }
 
   return true;
 }
 
-bool validKingMove(int k, int q, int nq) {
+bool kingHasValidMove(int k, int q, int nq) {
   int nr, nc, pos;
-  int rk = k / 8; int ck = k % 8;
-  int rnq = nq / 8; int cnq = nq % 8;
+  int rk = k / BOARD_SIZE; int ck = k % BOARD_SIZE;
+  int rnq = nq / BOARD_SIZE; int cnq = nq % BOARD_SIZE;
 
   nr = rk - 1; nc = ck;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos != nq && !(nr == rnq || nc == cnq)) return true;
   }
 
   nr = rk + 1; nc = ck;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos != nq && !(nr == rnq || nc == cnq)) return true;
   }
 
   nr = rk; nc = ck - 1;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos != nq && !(nr == rnq || nc == cnq)) return true;
   }
 
   nr = rk; nc = ck + 1;
   if (boundaryBoardCheck(nr, nc)) {
-    pos = nr * 8 + nc;
+    pos = nr * BOARD_SIZE + nc;
     if (pos != nq && !(nr == rnq || nc == cnq)) return true;
   }
 
@@ -98,17 +99,17 @@ int main() {
       continue;
     }
 
-    if (!legalQueenMove(k, q, nq)) {
+    if (!isLegalQueenMove(k, q, nq)) {
       cout << "Illegal move\n";
       continue;
     }
 
-    if (!allowedQueenMove(k, q, nq)) {
+    if (!isAllowedQueenMove(k, q, nq)) {
       cout << "Move not allowed\n";
       continue;
     }
 
-    if (validKingMove(k, q, nq)) {
+    if (kingHasValidMove(k, q, nq)) {
       cout << "Continue\n";
       continue;
     } else {
