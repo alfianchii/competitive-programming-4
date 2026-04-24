@@ -52,11 +52,30 @@ int main() {
     row--;
   }
 
-  cout << "White:\n";
-  for (Piece pawn : white) cout << pawn.type << pawn.col << pawn.row << ", ";
-  cout << endl;
-  
-  cout << "Black:\n";
-  for (Piece pawn : black) cout << pawn.type << pawn.col << pawn.row << ", ";
-  cout << endl;
+  sort(white.begin(), white.end(), [](Piece a, Piece b) {
+    if (getPriority(a.type) != getPriority(b.type)) return getPriority(a.type) < getPriority(b.type);
+    if (a.row != b.row) return a.row < b.row;
+    return a.col < b.col;
+  });
+  sort(black.begin(), black.end(), [](Piece a, Piece b) {
+    if (getPriority(a.type) != getPriority(b.type)) return getPriority(a.type) < getPriority(b.type);
+    if (a.row != b.row) return a.row > b.row;
+    return a.col < b.col;
+  });
+
+  cout << "White: ";
+  for (int i = 0; i < white.size(); i++) {
+    if (white[i].type != 'P') cout << white[i].type;
+    cout << white[i].col << white[i].row;
+    if (i != white.size() - 1) cout << ",";
+  }
+  cout << "\n";
+
+  cout << "Black: ";
+  for (int i = 0; i < black.size(); i++) {
+    if (black[i].type != 'P') cout << black[i].type;
+    cout << black[i].col << black[i].row;
+    if (i != black.size() - 1) cout << ",";
+  }
+  cout << "\n";
 }
