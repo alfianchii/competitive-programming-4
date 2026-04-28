@@ -5,22 +5,48 @@ using namespace std;
 int main() {
   int round; string answer, player;
 
-  while (cin >> round >> answer >> player && round != -1) {
+  while (cin >> round && round != -1) {
+    cin >> answer >> player;
+    
     bool guessed[26] = {};
     bool inAnswer[26] = {};
+    int remaining = 0;
 
-    cout << "Round " << round << "\n";
-    int wrong = 0;
-    for (char ch : answer) inAnswer[ch - 'a'] = true;
-    for (char ch : player) {
-      if (guessed[ch - 'a']) continue;
-      else guessed[ch - 'a'] = true;
+    for (char ch : answer) {
+      int idx = ch - 'a';
 
-      if (!inAnswer[ch - 'a']) wrong++;
+      if (!inAnswer[idx]) {
+        inAnswer[idx] = true;
+        remaining++;
+      }
     }
 
-    if (wrong == 0) cout << "You win.\n";
-    else if (wrong < 7) cout << "You chickened out.\n";
-    else if (wrong >= 7) cout << "You lose.\n";
+    int wrong = 0;
+    string result = "You chickened out.";
+    for (char ch : player) {
+      int idx = ch - 'a';
+
+      if (guessed[idx]) continue;
+      guessed[idx] = true;
+
+      if (inAnswer[idx]) {
+        remaining--;
+
+        if (remaining == 0) {
+          result = "You win.";
+          break;
+        }
+      } else {
+        wrong++;
+
+        if (wrong == 7) {
+          result = "You lose.";
+          break;
+        }
+      }
+    }
+
+    cout << "Round " << round << "\n";
+    cout << result << "\n";
   }
 }
