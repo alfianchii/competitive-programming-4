@@ -47,6 +47,7 @@ func CalPoints(ops []string) int {
 				stack.Push(num)
 				res.Push(num)
 			case "C":
+				stack.Pop()
 				res.Pop()
 			}
 		default:
