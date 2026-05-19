@@ -27,7 +27,6 @@ func (this *Stack) IsEmpty() bool {
 }
 
 func CalPoints(ops []string) int {
-	stack := Stack{}
 	res := Stack{}
 
 	for _, token := range ops {
@@ -35,24 +34,16 @@ func CalPoints(ops []string) int {
 		case "+", "D", "C":
 			switch token {
 			case "+":
-				left := stack.Pop()
-				right := stack.Pop()
-				num := left + right
-
-				stack.Push(num)
-				res.Push(num)
+				right := res.data[len(res.data)-1]
+				left := res.data[len(res.data)-2]
+				res.Push(left + right)
 			case "D":
-				num := 2 * res.Top()
-
-				stack.Push(num)
-				res.Push(num)
+				res.Push(2 * res.Top())
 			case "C":
-				stack.Pop()
 				res.Pop()
 			}
 		default:
 			num, _ := strconv.Atoi(token)
-			stack.Push(num)
 			res.Push(num)
 		}
 	}
