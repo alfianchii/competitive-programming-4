@@ -3,11 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	queue := Constructor()
+	stack := Constructor()
 
-	queue.Push(1)
-	queue.Push(2)
-	fmt.Println(queue.Top())
-	fmt.Println(queue.Pop())
-	queue.Empty()
+	stack.Push(1)
+	stack.Push(2)
+	fmt.Println(stack.Top())
+	fmt.Println(stack.Pop())
+	stack.Empty()
 }
