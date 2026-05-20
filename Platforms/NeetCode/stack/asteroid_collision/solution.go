@@ -25,22 +25,24 @@ func (this *Stack) IsEmpty() bool {
 func AsteroidCollision(asteroids []int) []int {
 	stack := Stack{}
 
-	for _, item := range asteroids {
-		if item > 0 {
-			stack.Push(item)
-			continue
+	for _, asteroid := range asteroids {
+		alive := true
+
+		for alive && asteroid < 0 && !stack.IsEmpty() && stack.Top() > 0 {
+			top := stack.Top()
+
+			if top < -asteroid {
+				stack.Pop()
+			} else if top == -asteroid {
+				stack.Pop()
+				alive = false
+			} else {
+				alive = false
+			}
 		}
 
-		left := stack.Top()
-		right := -item
-
-		if left > right {
-			continue
-		} else if left < right {
-			stack.Pop()
-		} else if left == right {
-			stack.Pop()
-			continue
+		if alive {
+			stack.Push(asteroid)
 		}
 	}
 
