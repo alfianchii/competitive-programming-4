@@ -26,16 +26,6 @@ Output: [null, null, null, 2, 2, false]
 
 Explanation:
 
-- `"1"` - Add 1 to the record, record = [1].
-- `"2"` - Add 2 to the record, record = [1, 2].
-- `"+"` - Add `1 + 2 = 3` to the record, record = [1, 2, 3].
-- `"C"` - Invalidate and remove the previous score, record = [1, 2].
-- `"5"` - Add 5 to the record, record = [1, 2, 5].
-- `"D"` - Add `2 * 5 = 10` to the record, record = [1, 2, 5, 10].
-- The total sum is `1 + 2 + 5 + 10 = 18`.
-
-Explanation:
-
 ```go
 MyStack myStack = new MyStack();
 myStack.push(1);
