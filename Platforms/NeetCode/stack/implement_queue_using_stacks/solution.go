@@ -1,36 +1,47 @@
 package main
 
 type MyQueue struct {
-	data []int
+	inStack  []int
+	outStack []int
 }
 
 func Constructor() MyQueue {
 	return MyQueue{
-		data: []int{},
+		inStack:  []int{},
+		outStack: []int{},
 	}
 }
 
 func (this *MyQueue) Push(x int) {
-	this.data = append(this.data, x)
-
-	n := len(this.data) - 1
-	for range n {
-		front := this.data[0]
-		this.data = this.data[1:]
-		this.data = append(this.data, front)
-	}
+	this.inStack = append(this.inStack, x)
 }
 
 func (this *MyQueue) Pop() int {
-	top := this.Peek()
-	this.data = this.data[:len(this.data)-1]
+	this.moveInToOut()
+
+	top := this.outStack[len(this.outStack)-1]
+	this.outStack = this.outStack[:len(this.outStack)-1]
 	return top
 }
 
 func (this *MyQueue) Peek() int {
-	return this.data[len(this.data)-1]
+	this.moveInToOut()
+
+	return this.outStack[len(this.outStack)-1]
 }
 
 func (this *MyQueue) Empty() bool {
-	return len(this.data) == 0
+	return len(this.inStack) == 0 && len(this.outStack) == 0
+}
+
+func (this *MyQueue) moveInToOut() {
+	if len(this.outStack) > 0 {
+		return
+	}
+
+	for len(this.inStack) > 0 {
+		top := this.inStack[len(this.inStack)-1]
+		this.inStack = this.inStack[:len(this.inStack)-1]
+		this.outStack = append(this.outStack, top)
+	}
 }

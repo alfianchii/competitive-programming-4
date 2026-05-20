@@ -10,5 +10,4 @@ func main() {
 	fmt.Println(queue.Peek()) // return 1
 	fmt.Println(queue.Pop())  // return 1, queue is [2]
 	queue.Empty()             // return false
-
 }
