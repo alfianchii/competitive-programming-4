@@ -29,70 +29,24 @@ func (this *Stack) IsEmpty() bool {
 func SimplifyPath(path string) string {
 	stack := Stack{}
 
-	symbol := ""
-	letter := ""
-	for _, str := range path {
-		switch str {
-		case '/', '.':
-			symbol += string(str)
-			if len(letter) != 0 {
-				stack.Push(letter)
-				letter = ""
+	parts := strings.Split(path, "/")
+
+	for _, part := range parts {
+		switch part {
+		case "", ".":
+			continue
+		case "..":
+			if !stack.IsEmpty() {
+				stack.Pop()
 			}
 		default:
-			letter += string(str)
-			for len(symbol) != 0 {
-				for strings.Contains(symbol, "...") {
-					stack.Push("...")
-
-					idx := strings.Index(symbol, "...")
-					symbol = symbol[idx : idx+3]
-				}
-
-				for strings.Contains(symbol, "..") && !stack.IsEmpty() {
-					stack.Pop()
-
-					idx := strings.Index(symbol, "..")
-					symbol = symbol[idx : idx+2]
-				}
-
-				symbol = ""
-			}
+			stack.Push(part)
 		}
 	}
 
-	if len(letter) != 0 {
-		stack.Push(letter)
-		letter = ""
+	if stack.IsEmpty() {
+		return "/"
 	}
 
-	for len(symbol) != 0 {
-		for strings.Contains(symbol, "...") {
-			stack.Push("...")
-
-			idx := strings.Index(symbol, "...")
-			symbol = symbol[idx : idx+3]
-		}
-
-		for strings.Contains(symbol, "..") && !stack.IsEmpty() {
-			stack.Pop()
-
-			idx := strings.Index(symbol, "..")
-			symbol = symbol[idx : idx+2]
-		}
-
-		symbol = ""
-	}
-
-	fullPath := ""
-	if !stack.IsEmpty() {
-		for _, pathName := range stack.data {
-			fullPath += "/"
-			fullPath += pathName
-		}
-	} else {
-		fullPath += "/"
-	}
-
-	return fullPath
+	return "/" + strings.Join(stack.data, "/")
 }
