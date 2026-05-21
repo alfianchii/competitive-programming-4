@@ -1,6 +1,8 @@
 package main
 
-import "strings"
+import (
+	"strings"
+)
 
 type Stack struct {
 	data []string
@@ -39,13 +41,19 @@ func SimplifyPath(path string) string {
 			}
 		default:
 			letter += string(str)
-			if len(symbol) != 0 {
-				if strings.Contains(symbol, "...") {
+			for len(symbol) != 0 {
+				for strings.Contains(symbol, "...") {
 					stack.Push("...")
+
+					idx := strings.Index(symbol, "...")
+					symbol = symbol[idx : idx+3]
 				}
 
-				if strings.Contains(symbol, "..") && !stack.IsEmpty() {
+				for strings.Contains(symbol, "..") && !stack.IsEmpty() {
 					stack.Pop()
+
+					idx := strings.Index(symbol, "..")
+					symbol = symbol[idx : idx+2]
 				}
 
 				symbol = ""
@@ -58,13 +66,19 @@ func SimplifyPath(path string) string {
 		letter = ""
 	}
 
-	if len(symbol) != 0 {
-		if strings.Contains(symbol, "...") {
+	for len(symbol) != 0 {
+		for strings.Contains(symbol, "...") {
 			stack.Push("...")
+
+			idx := strings.Index(symbol, "...")
+			symbol = symbol[idx : idx+3]
 		}
 
-		if strings.Contains(symbol, "..") && !stack.IsEmpty() {
+		for strings.Contains(symbol, "..") && !stack.IsEmpty() {
 			stack.Pop()
+
+			idx := strings.Index(symbol, "..")
+			symbol = symbol[idx : idx+2]
 		}
 
 		symbol = ""
