@@ -1,26 +1,31 @@
 package main
 
+type Pair struct {
+	price int
+	days  int
+}
+
 type StockSpanner struct {
-	data []int
+	data []Pair
 }
 
 func Constructor() StockSpanner {
 	return StockSpanner{
-		data: []int{},
+		data: []Pair{},
 	}
 }
 
-func (this *StockSpanner) Push(val int) {
+func (this *StockSpanner) Push(val Pair) {
 	this.data = append(this.data, val)
 }
 
-func (this *StockSpanner) Pop() int {
+func (this *StockSpanner) Pop() Pair {
 	top := this.Top()
 	this.data = this.data[:len(this.data)-1]
 	return top
 }
 
-func (this *StockSpanner) Top() int {
+func (this *StockSpanner) Top() Pair {
 	return this.data[len(this.data)-1]
 }
 
@@ -29,18 +34,14 @@ func (this *StockSpanner) IsEmpty() bool {
 }
 
 func (this *StockSpanner) Next(price int) int {
-	this.Push(price)
-
 	days := 1
-	n := len(this.data)
-	for i := 1; i <= n-1; i++ {
-		currPrice := this.data[len(this.data)-i]
-		prevPrice := this.data[len(this.data)-(i+1)]
 
-		if currPrice <= price && prevPrice <= price {
-			days++
-		}
+	for !this.IsEmpty() && this.Top().price <= price {
+		top := this.Pop()
+		days += top.days
 	}
+
+	this.Push(Pair{price: price, days: days})
 
 	return days
 }
