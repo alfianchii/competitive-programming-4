@@ -2,11 +2,14 @@ package main
 
 type FreqStack struct {
 	stack []int
-	freq  []int
+	freq  map[int]int
 }
 
 func Constructor() FreqStack {
-	return FreqStack{}
+	return FreqStack{
+		stack: []int{},
+		freq:  make(map[int]int),
+	}
 }
 
 func (this *FreqStack) Push(val int) {
@@ -15,21 +18,27 @@ func (this *FreqStack) Push(val int) {
 }
 
 func (this *FreqStack) Pop() int {
-	this.stack = this.stack[:len(this.stack)-1]
-
-	mostFreqIdx := 0
 	mostFreq := 0
-	for idx, val := range this.stack {
-		freq := this.freq[idx]
-		if freq > mostFreqIdx {
-			mostFreqIdx = freq
-			mostFreq = val
+	mostFreqVal := 0
+	mostFreqIdx := 0
+	for idx := len(this.stack) - 1; idx >= 0; idx-- {
+		val := this.stack[idx]
+		freq := this.freq[val]
+		if freq > mostFreq {
+			mostFreq = freq
+			mostFreqIdx = idx
+			mostFreqVal = val
 		}
 	}
 
-	this.stack = append(this.stack[:mostFreqIdx], this.stack[mostFreqIdx+1:]...)
+	if len(this.stack) > 1 {
+		this.stack = append(this.stack[:mostFreqIdx], this.stack[mostFreqIdx+1:]...)
+	} else {
+		this.stack = this.stack[:len(this.stack)-1]
+	}
+	this.freq[mostFreqVal]--
 
-	return mostFreq
+	return mostFreqVal
 }
 
 func (this *FreqStack) Top() int {
