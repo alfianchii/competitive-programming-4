@@ -13,7 +13,7 @@ func Constructor() MyHashSet {
 func (this *MyHashSet) Add(key int) {
 	idx := this.hash(key)
 
-	if !this.Contains(idx) {
+	if !this.Contains(key) {
 		this.buckets[idx] = append(this.buckets[idx], key)
 	}
 }
