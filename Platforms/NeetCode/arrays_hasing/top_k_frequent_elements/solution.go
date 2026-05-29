@@ -8,8 +8,8 @@ func TopKFrequent(nums []int, k int) []int {
 		count[num]++
 	}
 
-	for num, count := range count {
-		freqs[count] = append(freqs[count], num)
+	for num, freq := range count {
+		freqs[freq] = append(freqs[freq], num)
 	}
 
 	res := []int{}
