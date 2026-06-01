@@ -15,8 +15,7 @@ func (this *Solution) Encode(strs []string) string {
 func (this *Solution) Decode(encoded string) []string {
 	res := []string{}
 
-	i := 0
-	for i < len(encoded) {
+	for i := 0; i < len(encoded); {
 		j := i
 		for encoded[j] != '#' {
 			j++
