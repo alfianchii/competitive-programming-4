@@ -1,39 +1,33 @@
 package main
 
-import (
-	"strconv"
-	"strings"
-)
+import "strconv"
 
 type Solution struct{}
 
-func (s *Solution) Encode(strs []string) string {
-	var encodedStr strings.Builder
-
+func (this *Solution) Encode(strs []string) string {
+	encodedStr := ""
 	for _, str := range strs {
-		encodedStr.WriteString(strconv.Itoa(len(str)) + "#" + str)
+		encodedStr += strconv.Itoa(len(str)) + "#" + str
 	}
-
-	return encodedStr.String()
+	return encodedStr
 }
 
-func (s *Solution) Decode(encoded string) []string {
-	arr := []string{}
+func (this *Solution) Decode(encoded string) []string {
+	res := []string{}
 
-	// 5#Hello
-	// 0
 	i := 0
 	for i < len(encoded) {
-		// 1
 		j := i
-		for encoded[j] != '#' { // encoded[j] = 5
+		for encoded[j] != '#' {
 			j++
 		}
-		length, _ := strconv.Atoi(encoded[i:j]) // 5
-		i = j + 1                               // 2
-		// encoded[2:7] = Hello
-		arr = append(arr, encoded[i:i+length])
+
+		length, _ := strconv.Atoi(encoded[i:j])
+		i = j + 1
+
+		res = append(res, encoded[i:i+length])
 		i += length
 	}
-	return arr
+
+	return res
 }
