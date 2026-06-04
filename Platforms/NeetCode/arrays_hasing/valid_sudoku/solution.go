@@ -5,7 +5,7 @@ func IsValidSudoku(board [][]byte) bool {
 	cols := make([]map[byte]bool, 9)
 	boxes := make([]map[byte]bool, 9)
 
-	for i := range rows {
+	for i := range 9 {
 		rows[i] = make(map[byte]bool)
 		cols[i] = make(map[byte]bool)
 		boxes[i] = make(map[byte]bool)
