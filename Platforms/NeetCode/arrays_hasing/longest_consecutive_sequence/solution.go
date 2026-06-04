@@ -1,19 +1,19 @@
 package main
 
 func LongestConsecutive(nums []int) int {
-	freq := make(map[int]bool)
+	freqs := make(map[int]bool)
 
 	for _, num := range nums {
-		freq[num] = true
+		freqs[num] = true
 	}
 
 	longest := 0
-	for num := range freq {
-		if !freq[num-1] {
+	for num := range freqs {
+		if !freqs[num-1] {
 			current := num
 			length := 1
 
-			for freq[current+1] {
+			for freqs[current+1] {
 				current++
 				length++
 			}
