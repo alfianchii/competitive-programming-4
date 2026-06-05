@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{10, 9, 1, 1, 1, 2, 3, 1}
+	nums := []int{50000, -50000, 0}
 
 	result := SortArray(nums)
 

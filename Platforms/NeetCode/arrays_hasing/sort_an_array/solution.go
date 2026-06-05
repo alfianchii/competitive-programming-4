@@ -1,13 +1,25 @@
 package main
 
 func SortArray(nums []int) []int {
-	n := len(nums)
+	const minVal = -50000
+	const maxVal = 50000
 
-	for range n {
-		for i := 0; i < n-1; i++ {
-			if nums[i] > nums[i+1] {
-				nums[i], nums[i+1] = nums[i+1], nums[i]
-			}
+	offset := -minVal
+	countSize := maxVal - minVal + 1
+
+	freqs := make([]int, countSize)
+	for _, num := range nums {
+		freqs[num+offset]++
+	}
+
+	idx := 0
+	for i := range countSize { // 0 -> 100001
+		num := i - offset // -50000
+
+		for freqs[i] > 0 {
+			nums[idx] = num
+			idx++
+			freqs[i]--
 		}
 	}
 
