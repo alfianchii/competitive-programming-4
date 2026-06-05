@@ -5,15 +5,15 @@ func SortArray(nums []int) []int {
 	const maxVal = 50000
 
 	offset := -minVal
-	countSize := maxVal - minVal + 1
+	freqSize := maxVal - minVal + 1
 
-	freqs := make([]int, countSize)
+	freqs := make([]int, freqSize)
 	for _, num := range nums {
 		freqs[num+offset]++
 	}
 
 	idx := 0
-	for i := range countSize { // 0 -> 100001
+	for i := range freqSize { // 0 -> 100001
 		num := i - offset // -50000
 
 		for freqs[i] > 0 {
