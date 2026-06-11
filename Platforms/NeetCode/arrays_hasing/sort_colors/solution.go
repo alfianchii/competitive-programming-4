@@ -1,0 +1,27 @@
+package main
+
+func SortColors(nums []int) []int {
+	const minVal = -50000
+	const maxVal = 50000
+
+	offset := -minVal
+	freqSize := maxVal - minVal + 1
+
+	freqs := make([]int, freqSize)
+	for _, num := range nums {
+		freqs[num+offset]++
+	}
+
+	idx := 0
+	for i := range freqSize {
+		num := i - offset
+
+		for freqs[i] > 0 {
+			nums[idx] = num
+			idx++
+			freqs[i]--
+		}
+	}
+
+	return nums
+}
