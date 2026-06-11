@@ -35,10 +35,21 @@ The brute force (maybe?) way is to use Bubble Sort by repeatedly comparing two a
 
 Use Counting Sort instead because the value range is limited by the constraint. Instead of comparing elements, count how many times each number appears. Since array indexes cannot be negative, use an `offset` to shift every number into a valid index. After counting all numbers, rebuild `nums` from the smallest possible value to the largest possible value. If a number appears multiple times, write it multiple times into `nums`.
 
+## OK (Merge Sort)
+
+Well, since the problem requires `O(n log (n))` time complexity, Merge Sort is a OK choice. The idea is to divide the array into smaller halves until each subarray contains only one element. A single element is already sorted, so we can then merge two sorted halves back together while maintaining sorted order.
+
 ## Complexity Analysis
+
+### Counting Sort
 
 - Time Complexity: O(n + k)
 - Space Complexity: O(k)
+
+### Merge Sort
+
+- Time Complexity: O(n log n)
+- Space Complexity: O(n)
 
 ## Edge Cases
 

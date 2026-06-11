@@ -1,27 +1,47 @@
 package main
 
-func SortArray(nums []int) []int {
-	const minVal = -50000
-	const maxVal = 50000
+func merge(left, right []int) []int {
+	result := make([]int, 0, len(left)+len(right))
 
-	offset := -minVal
-	freqSize := maxVal - minVal + 1
+	i, j := 0, 0
 
-	freqs := make([]int, freqSize)
-	for _, num := range nums {
-		freqs[num+offset]++
-	}
-
-	idx := 0
-	for i := range freqSize { // 0 -> 100001
-		num := i - offset // -50000
-
-		for freqs[i] > 0 {
-			nums[idx] = num
-			idx++
-			freqs[i]--
+	for i < len(left) && j < len(right) {
+		if left[i] <= right[j] {
+			result = append(result, left[i])
+			i++
+		} else {
+			result = append(result, right[j])
+			j++
 		}
 	}
 
-	return nums
+	for i < len(left) {
+		result = append(result, left[i])
+		i++
+	}
+	for j < len(right) {
+		result = append(result, right[j])
+		j++
+	}
+
+	return result
+}
+
+func mergeSort(nums []int) []int {
+	if len(nums) <= 1 {
+		return nums
+	}
+
+	// 5 2 4 1
+	// 5 2 // 4 1
+	// 5 // 2 // 4 // 1
+	mid := len(nums) / 2           // 1
+	left := mergeSort(nums[:mid])  // 5
+	right := mergeSort(nums[mid:]) // 2
+
+	return merge(left, right)
+}
+
+func SortArray(nums []int) []int {
+	return mergeSort(nums)
 }
