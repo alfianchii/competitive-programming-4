@@ -1,5 +1,7 @@
 package main
 
+import "slices"
+
 type MyHashSet struct {
 	buckets [][]int
 }
@@ -11,7 +13,7 @@ func Constructor() MyHashSet {
 func (this *MyHashSet) Add(key int) {
 	idx := this.hash(key)
 
-	if !this.Contains(idx) {
+	if !this.Contains(key) {
 		this.buckets[idx] = append(this.buckets[idx], key)
 	}
 }
@@ -33,13 +35,7 @@ func (this *MyHashSet) Remove(key int) {
 func (this *MyHashSet) Contains(key int) bool {
 	idx := this.hash(key)
 
-	for _, v := range this.buckets[idx] {
-		if v == key {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(this.buckets[idx], key)
 }
 
 func (this *MyHashSet) hash(key int) int {

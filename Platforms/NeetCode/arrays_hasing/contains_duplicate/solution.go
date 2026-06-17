@@ -1,13 +1,14 @@
 package main
 
 func HasDuplicate(nums []int) bool {
-	freq := make(map[int]int)
+	freqs := make(map[int]bool)
 
 	for _, num := range nums {
-		if _, exists := freq[num]; exists {
+		if freqs[num] {
 			return true
 		}
-		freq[num]++
+
+		freqs[num] = true
 	}
 
 	return false

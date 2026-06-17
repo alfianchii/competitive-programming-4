@@ -6,10 +6,9 @@ func LongestCommonPrefix(strs []string) string {
 	}
 
 	first := strs[0]
-
 	for i, ch := range first {
-		for _, s := range strs {
-			if i >= len(s) || s[i] != byte(ch) {
+		for _, str := range strs {
+			if i >= len(str) || str[i] != byte(ch) {
 				return first[:i]
 			}
 		}
